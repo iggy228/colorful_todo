@@ -1,12 +1,28 @@
+import 'package:colorful_todo/screens/add_task_screen.dart';
+import 'package:colorful_todo/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 
 class TasksScreen extends StatelessWidget {
+  TextEditingController _controller = TextEditingController(text: '');
+
+  Widget buildBottomModalSheet(BuildContext context) => SingleChildScrollView(
+    padding: EdgeInsets.fromLTRB(16.0, 32.0, 16.0, MediaQuery.of(context).viewInsets.bottom),
+    child: AddTaskScreen(controller: _controller),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => showModalBottomSheet(
+            context: context,
+            builder: buildBottomModalSheet,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)
+            )),
+            isScrollControlled: true,
+        ),
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
       ),
@@ -49,7 +65,6 @@ class TasksScreen extends StatelessWidget {
           SizedBox(height: 24.0),
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
@@ -57,7 +72,7 @@ class TasksScreen extends StatelessWidget {
                 ),
                 color: Colors.white,
               ),
-              child: Text('Some text'),
+              child: TaskList(),
             ),
           ),
         ],
