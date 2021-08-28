@@ -1,13 +1,9 @@
 import 'package:colorful_todo/model/task.dart';
+import 'package:colorful_todo/model/task_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final void Function(Task task) addTaskCallback;
-
-  AddTaskScreen({
-    required this.addTaskCallback,
-  });
-
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
 }
@@ -35,7 +31,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           textAlign: TextAlign.center,
         ),
         ElevatedButton(
-          onPressed: () => widget.addTaskCallback(Task(name: newTitle)),
+          onPressed: () {
+            final Task task = Task(name: newTitle);
+            context.read<TaskData>().addTask(task);
+            Navigator.pop(context);
+          },
           child: Text('Add'),
         )
       ],

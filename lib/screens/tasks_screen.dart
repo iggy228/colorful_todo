@@ -1,28 +1,16 @@
-import 'package:colorful_todo/model/task.dart';
+import 'package:colorful_todo/model/task_data.dart';
 import 'package:colorful_todo/screens/add_task_screen.dart';
 import 'package:colorful_todo/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy a milk'),
-    Task(name: 'Buy an apples'),
-    Task(name: 'Code more and have a fun'),
-  ];
-
+class TasksScreen extends StatelessWidget {
   Widget buildBottomModalSheet(BuildContext context) => SingleChildScrollView(
-    // ViewInsets access to size of obscured display
-    padding: EdgeInsets.fromLTRB(16.0, 32.0, 16.0, MediaQuery.of(context).viewInsets.bottom + 8.0),
-    child: AddTaskScreen(addTaskCallback: (task) {
-      setState(() => tasks.add(task));
-      Navigator.pop(context);
-    }),
-  );
+        // ViewInsets access to size of obscured display
+        padding: EdgeInsets.fromLTRB(
+            16.0, 32.0, 16.0, MediaQuery.of(context).viewInsets.bottom + 8.0),
+        child: AddTaskScreen(),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +18,13 @@ class _TasksScreenState extends State<TasksScreen> {
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         onPressed: () => showModalBottomSheet(
-            context: context,
-            builder: buildBottomModalSheet,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)
-            )),
-            isScrollControlled: true,
+          context: context,
+          builder: buildBottomModalSheet,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0))),
+          isScrollControlled: true,
         ),
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
@@ -67,7 +56,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} tasks',
+                  '${Provider.of<TaskData>(context).count} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -86,7 +75,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 ),
                 color: Colors.white,
               ),
-              child: TaskList(tasks: tasks),
+              child: TaskList(),
             ),
           ),
         ],
