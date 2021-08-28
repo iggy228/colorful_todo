@@ -1,12 +1,19 @@
+import 'package:colorful_todo/model/task.dart';
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({
-    Key? key,
-    required TextEditingController controller,
-  }) : _controller = controller, super(key: key);
+class AddTaskScreen extends StatefulWidget {
+  final void Function(Task task) addTaskCallback;
 
-  final TextEditingController _controller;
+  AddTaskScreen({
+    required this.addTaskCallback,
+  });
+
+  @override
+  _AddTaskScreenState createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  String newTitle = '';
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +30,12 @@ class AddTaskScreen extends StatelessWidget {
           ),
         ),
         TextField(
-          controller: _controller,
+          onChanged: (val) => newTitle = val,
           autofocus: true,
           textAlign: TextAlign.center,
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () => widget.addTaskCallback(Task(name: newTitle)),
           child: Text('Add'),
         )
       ],

@@ -1,13 +1,27 @@
+import 'package:colorful_todo/model/task.dart';
 import 'package:colorful_todo/screens/add_task_screen.dart';
 import 'package:colorful_todo/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 
-class TasksScreen extends StatelessWidget {
-  TextEditingController _controller = TextEditingController(text: '');
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: 'Buy a milk'),
+    Task(name: 'Buy an apples'),
+    Task(name: 'Code more and have a fun'),
+  ];
 
   Widget buildBottomModalSheet(BuildContext context) => SingleChildScrollView(
-    padding: EdgeInsets.fromLTRB(16.0, 32.0, 16.0, MediaQuery.of(context).viewInsets.bottom),
-    child: AddTaskScreen(controller: _controller),
+    // ViewInsets access to size of obscured display
+    padding: EdgeInsets.fromLTRB(16.0, 32.0, 16.0, MediaQuery.of(context).viewInsets.bottom + 8.0),
+    child: AddTaskScreen(addTaskCallback: (task) {
+      setState(() => tasks.add(task));
+      Navigator.pop(context);
+    }),
   );
 
   @override
@@ -53,7 +67,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 tasks',
+                  '${tasks.length} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -72,7 +86,7 @@ class TasksScreen extends StatelessWidget {
                 ),
                 color: Colors.white,
               ),
-              child: TaskList(),
+              child: TaskList(tasks: tasks),
             ),
           ),
         ],
