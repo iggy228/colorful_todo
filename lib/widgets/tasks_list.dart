@@ -10,7 +10,7 @@ class TaskList extends StatelessWidget {
     return Consumer<TaskData>(
       builder: (_, taskData, child) {
         return ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.zero,
           itemCount: taskData.count,
           itemBuilder: (_, index) {
             final Task task = taskData.tasks[index];
@@ -18,7 +18,7 @@ class TaskList extends StatelessWidget {
               name: task.name,
               isChecked: task.isDone,
               checkboxCallback: (_) => taskData.updateTask(task),
-              longPressCallback: () => taskData.removeTask(task),
+              dismissCallback: (_) => taskData.removeTask(task),
             );
           },
         );
