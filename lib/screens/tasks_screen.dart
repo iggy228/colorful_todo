@@ -1,5 +1,6 @@
 import 'package:colorful_todo/model/task_data.dart';
 import 'package:colorful_todo/screens/add_task_screen.dart';
+import 'package:colorful_todo/widgets/task_header.dart';
 import 'package:colorful_todo/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,35 +35,8 @@ class TasksScreen extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(30, 60, 30, 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
-                  child: Icon(
-                    Icons.list,
-                    color: Colors.lightBlueAccent,
-                    size: 30.0,
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                Text(
-                  'Colorful Todos',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 50.0,
-                  ),
-                ),
-                Text(
-                  '${Provider.of<TaskData>(context).count} tasks',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
+            child: TaskHeader(
+              taskCount: Provider.of<TaskData>(context).count,
             ),
           ),
           SizedBox(height: 24.0),
